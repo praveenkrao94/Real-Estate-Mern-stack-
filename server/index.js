@@ -32,7 +32,11 @@ app.use('/api/user', UserRoute);
 
 app.use('/api/auth', AuthRouter);
 
-
+app.use((err , req, res , next)=>{
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "internal Server Error";
+  return res.status(statusCode).json({sucess:false , message , statusCode });
+})
 
 app.listen(4000, () => {
   console.log('server is running on port 4000');
